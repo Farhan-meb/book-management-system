@@ -1,5 +1,5 @@
-import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication, ValidationPipe } from '@nestjs/common';
+import { Test, TestingModule } from '@nestjs/testing';
 import * as request from 'supertest';
 import { AppModule } from '../src/app.module';
 import { PrismaService } from '../src/prisma/prisma.service';
@@ -15,14 +15,16 @@ describe('AuthorsController (e2e)', () => {
     }).compile();
 
     app = moduleFixture.createNestApplication();
-    app.useGlobalPipes(new ValidationPipe({
+    app.useGlobalPipes(
+      new ValidationPipe({
         whitelist: true,
         forbidNonWhitelisted: true,
         transform: true,
-    }));
-    
+      }),
+    );
+
     await app.init();
-    
+
     prisma = app.get<PrismaService>(PrismaService);
 
     // Clean up database before tests
@@ -79,7 +81,7 @@ describe('AuthorsController (e2e)', () => {
 
   it('GET /authors/:id -> should return 404 for a non-existent author', () => {
     return request(app.getHttpServer())
-        .get('/authors/non-existent-id')
-        .expect(404);
+      .get('/authors/non-existent-id')
+      .expect(404);
   });
-}); 
+});
