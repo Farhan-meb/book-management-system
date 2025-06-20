@@ -129,7 +129,3 @@ Content-Type: application/json
   "authorId": "author-id-here"
 }
 ```
-
-## License
-
-MIT
